@@ -1,0 +1,69 @@
+{% extends "autorehab/base_dev.html" %}
+
+{% load static %}
+
+{% block content %}
+
+
+<section class="trainer_section layout_padding">
+    <div class="container">
+      <div class="heading_container">
+        <h2>
+          {{ exerciseType }}
+        </h2>
+      </div>
+      <div class="heading_container">
+        <h3>
+          {{ midTitle }}
+        </h3>
+      </div>
+      <form action="{% url 'detection_dev' %}" method="post" id="durrep">
+        {% csrf_token %}
+        <div class="row">
+
+          <div class="col-lg-4 col-md-6 mx-auto">
+          
+            <div class="box">
+              <div class="name">
+                <h5>
+                  {{ duration }}
+                </h5>
+              </div>
+              <div class="shortform">
+                <input type="number" name="durationNumber" value=10 placeholder="Seconds">
+              </div>
+              
+            </div>
+
+            </div>
+
+          <div class="col-lg-4 col-md-6 mx-auto">
+            <div class="box">
+              <div class="name">
+                <h5>
+                  {{ reps }}
+                </h5>
+              </div>
+              <div class="shortform">
+                <input type="number" name="repsNumber" value=10 placeholder="Reps">
+              </div>
+              
+            </div>
+          </div>
+
+        </div>
+
+        <div class="box">
+
+
+            <input type="submit" value="Submit">
+
+
+
+          
+        </div>
+      </form>
+      </div>
+    </div>
+</section>
+{% endblock content %}

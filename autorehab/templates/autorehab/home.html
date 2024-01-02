@@ -1,0 +1,14 @@
+{% extends "autorehab/base.html" %}
+
+{% block content %}
+    {% for post in posts %}
+        <h1>{{ post.title }}</h1>
+        <br>
+        <h2>{{ post.content }}</h2>
+        <p>By {{ post.author }}</p>
+    {% endfor %}
+
+    <a href="{% url 'setup' %}">
+        <button>SETUP </button>
+    </a>
+{% endblock content %}

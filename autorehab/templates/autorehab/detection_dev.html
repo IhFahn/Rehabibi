@@ -1,0 +1,17 @@
+{% extends "autorehab/base_dev.html" %}
+
+{% load static %}
+
+{% block content %}
+    <section class="trainer_section layout_padding">
+        {{ duration }}
+
+        {{ reps }}
+
+        {{ exerciseType }}
+
+        <img src="{% url 'webcam_feed' %}">
+
+    </section>
+    
+{% endblock content %}
