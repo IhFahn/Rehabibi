@@ -37,8 +37,9 @@ def home(request):
 def home_dev(request):
 
     context = {
+        'url':"home",
+        'title':'Home',
         'general' : 'Physiotherapy',
-        'title' : 'An acl rehab application',
         'appName' : 'AutoRehab',
         'author' : 'by: ihFahn',
         'getStarted' : 'Get Started'
@@ -116,6 +117,34 @@ def detection_dev(request):
         context['reps'] = reps
 
     return render(request, 'autorehab/detection_dev.html', context)
+
+def dashboard(request):
+
+    context = {
+        'url':"dashboard",
+        'title':'Dashboard',
+        'bigTitle' : 'Select your exercise',
+        'exercise1' : 'Front Straight Leg Raise',
+        'exercise2' : 'Side Straight Leg Raise',
+        'exercise3' : 'Pronated Hip Extension',
+        'exercise4' : 'Inner Quadriceps Range'
+    }
+
+    return render(request, 'autorehab/dashboard.html', context)
+
+def exercise(request):
+
+    context = {
+        'url':"exercise",
+        'title':'Exercise',
+        'bigTitle' : 'Select your exercise',
+        'exercise1' : 'Front Straight Leg Raise',
+        'exercise2' : 'Side Straight Leg Raise',
+        'exercise3' : 'Pronated Hip Extension',
+        'exercise4' : 'Inner Quadriceps Range'
+    }
+
+    return render(request, 'autorehab/exercise.html', context)
 
 def gen(camera):
     while True:
