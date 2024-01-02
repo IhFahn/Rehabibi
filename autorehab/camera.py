@@ -20,6 +20,9 @@ class IPWebCam(object):
         self.nSecond = 0
         self.elapsed_time = 0
         self.counter = 0
+        print(self.duration)
+        print(self.reps)
+
 
 
     def get_frame(self):
@@ -29,7 +32,7 @@ class IPWebCam(object):
             self.success, self.img = self.video.read()
             self.img = self.detector.findPose(self.img, False)
             self.lmList = self.detector.findPosition(self.img, draw=False)
-
+            
             if len(self.lmList) != 0:
         # ------------------(p1, MIDPOINT, p2)
 
@@ -57,15 +60,17 @@ class IPWebCam(object):
                     self.elapsed_time = 0
                     self.start_time = 0
 
-                if int(self.elapsed_time) == self.duration:
+                if int(self.elapsed_time) >= int(self.duration):
                     print("yes yes yes")
                     winsound.Beep(440, 500)
                     self.counter += 0.5
                     # self.start_time = 0
                     # self.elapsed_time = 0
                     continue
-            frame_flip = cv2.flip(self.img, 1)
-            ret, jpeg = cv2.imencode('.jpg', frame_flip)
+
+
+            ##frame_flip = cv2.flip(, 1)
+            ret, jpeg = cv2.imencode('.jpg', self.img)
             return jpeg.tobytes()
 
     def __del__(self):
