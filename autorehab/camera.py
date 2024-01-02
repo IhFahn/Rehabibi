@@ -60,7 +60,7 @@ class IPWebCam(object):
                     self.elapsed_time = 0
                     self.start_time = 0
 
-                if int(self.elapsed_time) >= int(self.duration):
+                if int(self.elapsed_time) == int(self.duration):
                     print("yes yes yes")
                     winsound.Beep(440, 500)
                     self.counter += 0.5
