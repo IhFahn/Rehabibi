@@ -1,0 +1,8 @@
+install mediapipe 
+install cv2
+
+during first setup, run
+
+    "python manage.py migrate"
+
+to initialise the db for variable passing
