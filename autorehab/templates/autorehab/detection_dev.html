@@ -12,6 +12,24 @@
 
         <img src="{% url 'webcam_feed' %}">
 
+        <p>Elapsed Time: <span id="elapsed-time">0</span> seconds</p>
+
+        <script>
+            const elapsedTimeSpan = document.getElementById('elapsed-time');
+            const source = new EventSource("{% url 'webcam_feed' %}");
+
+            source.onmessage = function (event) {
+                const parts = event.data.split('\r\n\r\n');
+                const elapsed_time_section = parts.find(section => section.startsWith('Elapsed-Time:'));
+                const elapsed_time = elapsed_time_section.split(':')[1].trim();
+                elapsedTimeSpan.innerText = elapsed_time;
+            };
+
+            source.onerror = function (event) {
+                console.error("EventSource failed:", event);
+                source.close();
+            };
+        </script>
     </section>
     
 {% endblock content %}

@@ -11,5 +11,6 @@ urlpatterns = [
     path("detection_dev/", views.detection_dev, name="detection_dev"),
     #path("video_feed/", views.video_feed, name="video_feed"),
     path("webcam_feed/", views.webcam_feed, name="webcam_feed"),
+    #path("elapsed_time/", views.elapsed_time, name="elapsed_time"),
 
 ]

@@ -29,9 +29,14 @@ class IPWebCam(object):
 
 
         while True:
+        
+
             self.success, self.img = self.video.read()
             self.img = self.detector.findPose(self.img, False)
             self.lmList = self.detector.findPosition(self.img, draw=False)
+
+
+
             
             if len(self.lmList) != 0:
         # ------------------(p1, MIDPOINT, p2)
@@ -54,7 +59,7 @@ class IPWebCam(object):
                         self.start_time = time.time()
 
                     self.elapsed_time = time.time() - self.start_time
-                    print(self.elapsed_time)
+                    #print(self.elapsed_time)
 
                 else:
                     self.elapsed_time = 0
@@ -71,7 +76,7 @@ class IPWebCam(object):
 
             ##frame_flip = cv2.flip(, 1)
             ret, jpeg = cv2.imencode('.jpg', self.img)
-            return jpeg.tobytes()
+            return jpeg.tobytes(), self.elapsed_time
 
     def __del__(self):
         self.video.release()
