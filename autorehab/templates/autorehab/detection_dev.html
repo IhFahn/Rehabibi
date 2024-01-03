@@ -3,32 +3,49 @@
 {% load static %}
 
 {% block content %}
-    <section class="trainer_section layout_padding">
-        {{ duration }}
+    <!-- <section class="trainer_section layout_padding"> -->
+    <section class="trainer_section p-5">
 
-        {{ reps }}
+        <div class="d-flex align-items-center justify-content-center pb-3">
+            <h2>{{ exerciseType }}</h2>
+        </div>
+        <div id="exercisePart" style="display: none;">
+        <div class="container ">
+            <div class="row">
+              <div class="col-sm d-flex justify-content-center align-items-center">
+                <h5>Elapsed Time: <span id="elapsed-time" style="font-size: 40px; font-weight: bold;">0</span> s</h5>
+              </div>
+              <div class="col-sm">
+                <img id="video">
 
-        {{ exerciseType }}
-
-        <img src="{% url 'webcam_feed' %}">
-
-        <p>Elapsed Time: <span id="elapsed-time">0</span> seconds</p>
+              </div>
+              <div class="col-sm d-flex justify-content-center align-items-center">
+                <h5>Reps: <span id="reps" style="font-size: 40px; font-weight: bold;">0</span>/{{ reps }}</h5>
+              </div>
+            </div>
+          </div>
+          </div>
 
         <script>
-            const elapsedTimeSpan = document.getElementById('elapsed-time');
-            const source = new EventSource("{% url 'webcam_feed' %}");
+            // Create an EventSource for server-sent events
+        const eventSource = new EventSource('/webcam_feed/');
 
-            source.onmessage = function (event) {
-                const parts = event.data.split('\r\n\r\n');
-                const elapsed_time_section = parts.find(section => section.startsWith('Elapsed-Time:'));
-                const elapsed_time = elapsed_time_section.split(':')[1].trim();
-                elapsedTimeSpan.innerText = elapsed_time;
-            };
+eventSource.onmessage = function (event) {
+    const data = JSON.parse(event.data);
+    
+    // console.log(data)
 
-            source.onerror = function (event) {
-                console.error("EventSource failed:", event);
-                source.close();
-            };
+    // Update HTML elements with the received data
+    document.getElementById('video').src = `data:image/jpeg;base64, ${data.frame}`;
+    document.getElementById('elapsed-time').innerText = parseInt(data.time);
+    document.getElementById('reps').innerText = parseInt(data.reps);
+    document.getElementById('exercisePart').style.display = "block";
+};
+
+eventSource.onerror = function (error) {
+    console.error('EventSource failed:', error);
+    eventSource.close();
+};
         </script>
     </section>
     

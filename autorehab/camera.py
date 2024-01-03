@@ -6,6 +6,7 @@ import winsound
 import PoseModule as pm
 from django.shortcuts import render
 
+import base64
 
 class IPWebCam(object):
     def __init__(self, exerciseType, duration, reps):
@@ -75,8 +76,11 @@ class IPWebCam(object):
 
 
             ##frame_flip = cv2.flip(, 1)
-            ret, jpeg = cv2.imencode('.jpg', self.img)
-            return jpeg.tobytes(), self.elapsed_time
+            # ret, jpeg = cv2.imencode('.jpg', self.img)
+            _, buffer = cv2.imencode('.jpg', self.img)
+            new_frame_data = base64.b64encode(buffer).decode('utf-8')
+            # return jpeg.tobytes(), self.elapsed_time
+            return new_frame_data, self.elapsed_time, self.counter
 
     def __del__(self):
         self.video.release()
