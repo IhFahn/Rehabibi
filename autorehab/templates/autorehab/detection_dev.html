@@ -15,20 +15,61 @@
         <p>Elapsed Time: <span id="elapsed-time">0</span> seconds</p>
 
         <script>
-            const elapsedTimeSpan = document.getElementById('elapsed-time');
-            const source = new EventSource("{% url 'webcam_feed' %}");
+            // const elapsedTimeSpan = document.getElementById('elapsed-time');
+            // const imageContainer = document.getElementById('camera-feed');
+            
 
-            source.onmessage = function (event) {
-                const parts = event.data.split('\r\n\r\n');
-                const elapsed_time_section = parts.find(section => section.startsWith('Elapsed-Time:'));
-                const elapsed_time = elapsed_time_section.split(':')[1].trim();
-                elapsedTimeSpan.innerText = elapsed_time;
-            };
 
-            source.onerror = function (event) {
-                console.error("EventSource failed:", event);
-                source.close();
-            };
+            // const source = new EventSource("{% url 'webcam_feed' %}");
+            // console.log("SSE connection status:", source.readyState);
+
+            // source.onmessage = function (event) {
+            //     console.log("Yes");
+            //     const parts = event.data.split('\r\n\r\n');
+            //     const imageSection = parts.find(section => section.startsWith('Content-Type: image/jpeg'));
+            //     const elapsed_time_section = parts.find(section => section.startsWith('Elapsed-Time:'));
+
+            //     // Parse the elapsed time
+            //     const elapsed_time = elapsed_time_section.split(':')[1].trim();
+            //     console.log("Elapsed TIme:", elapsed_time);
+            //     elapsedTimeSpan.innerHTML = elapsed_time;
+
+            //     // Update the image container with the received image
+            //     const blob = new Blob([imageSection], { type: 'image/jpeg' });
+            //     imageContainer.src = URL.createObjectURL(blob);
+            // };
+
+            // source.onerror = function (event) {
+            //     if (event.eventPhase === EventSource.CLOSED) {
+            //         console.log("EventSource connection was closed.");
+            //     } else {
+            //         console.error("EventSource failed:", event);
+            //     }
+            
+            //};
+
+            function callWebcamFeed() {
+        fetch("{% url 'webcam_feed' %}")
+            .then(response => {
+                console.log("itworks")
+                console.log(response)
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log("Response from webcam_feed:", data);
+            })
+            .catch(error => {
+                console.error("Error calling webcam_feed:", error);
+            });
+    }
+    callWebcamFeed()
+
+    // Call the function when needed, for example, when a button is clicked
+    // Replace 'yourButtonId' with the actual ID of your button
+    //document.getElementById('yourButtonId').addEventListener('click', callWebcamFeed);
         </script>
     </section>
     

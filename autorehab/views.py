@@ -120,7 +120,7 @@ def detection_dev(request):
 def gen(camera):
     while True:
         frame, elapsed_time = camera.get_frame()
-        #print(int(elapsed_time))
+        print(int(elapsed_time))
         boundary_section = (
             b'--frame\r\n'
             b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n'
@@ -137,7 +137,7 @@ def webcam_feed(request):
                                               request.session.get('duration', None), 
                                               request.session.get('reps', None))
     
-    elapsed_time = webcamInstance.timeGetter()
-    print(elapsed_time)
+    #elapsed_time = webcamInstance.timeGetter()
+    #print(elapsed_time)
     return StreamingHttpResponse(gen(webcamInstance),
                                  content_type='multipart/x-mixed-replace; boundary=frame')
