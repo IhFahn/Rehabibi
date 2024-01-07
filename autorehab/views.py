@@ -40,7 +40,7 @@ def home_dev(request):
         'url':"home",
         'title':'Home',
         'general' : 'Physiotherapy',
-        'appName' : 'AutoRehab',
+        'appName' : 'REHABIBI',
         'author' : 'by: ihFahn',
         'getStarted' : 'Get Started'
     }
@@ -131,6 +131,14 @@ def dashboard(request):
     }
 
     return render(request, 'autorehab/dashboard.html', context)
+
+def our_team(request):
+    context={
+        'url':"our_team",
+        'title':"Our Team"
+    }
+
+    return render(request,'autorehab/our_team.html',context)
 
 def exercise(request):
 

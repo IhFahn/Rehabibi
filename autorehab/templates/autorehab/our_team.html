@@ -1,0 +1,139 @@
+{% extends "autorehab/base_dev.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+.row {
+    display:flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.box {
+    text-align: center; /* Center text within each box */
+}
+
+</style>
+
+<section class="trainer_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+          <h2>
+            Our Team
+          </h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+              <div class="box">
+                <div class="name">
+                <div class="name-row">
+                    <h5>
+                    Tan Yi Fan
+                    </h5>
+                </div>
+                  <div class="role-row">
+                  <h6>
+                    Project Manager / Software Engineer
+                  </h6>
+                </div>
+                </div>
+                <div class="img-box">
+                  <img src="{% static 'autorehab/images/yifan.jpeg'%}" style="width:250px;height:300px">
+                </div>
+                <div class="social_box">
+                  <a href="https://github.com/IhFahn">
+                    <img src="{% static 'autorehab/images/github-mark-again.png'%}" alt="">
+                  </a>
+                  <a href="https://www.linkedin.com/in/tan-yi-fan-5399a8202/">
+                    <img src="{% static 'autorehab/images/linkedin_icon.png'%}" alt="">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="box">
+                <div class="name" style="padding-bottom: 20px;">
+                    <div class="name-row">
+                  <h5>
+                    Teh Ghee Ang
+                  </h5>
+                </div>
+                  <div class="role-row">
+                  <h6>
+                    Software Engineer
+                  </h6>
+                </div>
+                </div>
+                <div class="img-box">
+                  <img src="{% static 'autorehab/images/gheeang.jpg'%}" style="width:250px;height:300px">
+                </div>
+                <div class="social_box">
+                  <a href="https://github.com/jm2monkeyking">
+                    <img src="{% static 'autorehab/images/github-mark-again.png'%}" alt="">
+                  </a>
+                  <a href="https://www.linkedin.com/in/teh-ghee-ang-114487176/">
+                    <img src="{% static 'autorehab/images/linkedin_icon.png'%}" alt="">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="box">
+                <div class="name" style="padding-bottom: 20px;">
+                    <div class="name-row">
+                  <h5>
+                    Chung Jen Li
+                  </h5>
+                </div>
+                <div class="role-row">
+                  <h6>
+                    Software Engineer
+                  </h6>
+                </div>
+                </div>
+                <div class="img-box">
+                  <img src="{% static 'autorehab/images/jenli.jpg'%}" style="width:250px;height:300px">
+                </div>
+                <div class="social_box">
+                  <a href="https://github.com/jenliiiiiiiiiiiii">
+                    <img src="{% static 'autorehab/images/github-mark-again.png'%}" alt="">
+                  </a>
+                  <a href="https://www.linkedin.com/in/jen-li-chung-79aba5247/">
+                    <img src="{% static 'autorehab/images/linkedin_icon.png'%}" alt="">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="box">
+                  <div class="name" style="padding-bottom: 20px;">
+                    <div class="name-row">
+                    <h5>
+                      Lim Zhou Yi
+                    </h5>
+                </div>
+                <div class="role-row">
+                    <h6>
+                        UI Designer
+                    </h6>
+                  </div>
+                  </div>
+                  <div class="img-box">
+                    <img src="{% static 'autorehab/images/joey.jpg'%}" style="width:250px;height:300px">
+                  </div>
+                  <div class="social_box">
+                    <a href="https://github.com/joeylim0328">
+                      <img src="{% static 'autorehab/images/github-mark-again.png'%}" alt="">
+                    </a>
+                    <a href="https://www.linkedin.com/in/joey-lim-015368180/">
+                      <img src="{% static 'autorehab/images/linkedin_icon.png'%}" alt="">
+                    </a>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+  </section>
+{% endblock content %}
