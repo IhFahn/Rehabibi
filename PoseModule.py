@@ -111,7 +111,7 @@ class poseDetector:
                 po1 = 24
                 po2 = 26
                 po3 = 28
-                ran = (150, 165)
+                ran = (60, 165)
 
 
 
