@@ -86,9 +86,9 @@ def durrep_dev(request):
 def detection_dev(request):
 
 
-    exerciseNumber = request.session.get('exerciseType', None)
-    if exerciseNumber == None:
-        exerciseNumber = int(request.POST.get('exerciseType'))
+    # exerciseNumber = request.session.get('exerciseType', None)
+    # if exerciseNumber == None:
+    exerciseNumber = int(request.POST.get('exerciseType'))
     if exerciseNumber == 1:
         exerciseType = 'Front Straight Leg Raise'
     if exerciseNumber == 2:
