@@ -3,31 +3,50 @@
 {% load static %}
 
 {% block content %}
-    <section class="trainer_section layout_padding" style="height: 100%;">
-        <div class="container">
-            <h2 class="mb-4">{{ exerciseType }}</h2>
-            <div class="row">
-                <div class="col-2 d-flex">
-                    <div class="align-item-center mt-5">
-                        <h3 class="mt-5  text-center">Duration:</h3>
-                    
-                        <h1 style="font-size: 3rem;">{{ duration }} sec</h1>
-                    </div>
-  
-                    </div>
-                <div class="col-8 d-flex justify-content-center"><img src="{% url 'webcam_feed' %}">
-                </div>
-                <div class="col-2 d-flex ">
-                    <div class="align-item-center  mt-5">
-                        <h3  class="mt-5 text-center">Reps:</h3>
-                        <h1 style="font-size: 3rem;">0 / {{ reps }}</h1>
-                    </div>
-                </div>
+    <!-- <section class="trainer_section layout_padding"> -->
+    <section class="trainer_section p-5">
 
-            </div>
+        <div class="d-flex align-items-center justify-content-center pb-3">
+            <h2>{{ exerciseType }}</h2>
         </div>
-       
+        <div id="exercisePart" style="display: none;">
+        <div class="container ">
+            <div class="row">
+              <div class="col-sm d-flex justify-content-center align-items-center">
+                <h5>Elapsed Time: <span id="elapsed-time" style="font-size: 40px; font-weight: bold;">0</span> s</h5>
+              </div>
+              <div class="col-sm">
+                <img id="video">
 
+              </div>
+              <div class="col-sm d-flex justify-content-center align-items-center">
+                <h5>Reps: <span id="reps" style="font-size: 40px; font-weight: bold;">0</span>/{{ reps }}</h5>
+              </div>
+            </div>
+          </div>
+          </div>
+
+        <script>
+            // Create an EventSource for server-sent events
+        const eventSource = new EventSource('/webcam_feed/');
+
+eventSource.onmessage = function (event) {
+    const data = JSON.parse(event.data);
+    
+    // console.log(data)
+
+    // Update HTML elements with the received data
+    document.getElementById('video').src = `data:image/jpeg;base64, ${data.frame}`;
+    document.getElementById('elapsed-time').innerText = parseInt(data.time);
+    document.getElementById('reps').innerText = parseInt(data.reps);
+    document.getElementById('exercisePart').style.display = "block";
+};
+
+eventSource.onerror = function (error) {
+    console.error('EventSource failed:', error);
+    eventSource.close();
+};
+        </script>
     </section>
     
 {% endblock content %}

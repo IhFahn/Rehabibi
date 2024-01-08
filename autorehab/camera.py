@@ -6,6 +6,7 @@ import winsound
 import PoseModule as pm
 from django.shortcuts import render
 
+import base64
 
 class IPWebCam(object):
     def __init__(self, exerciseType, duration, reps):
@@ -20,16 +21,24 @@ class IPWebCam(object):
         self.nSecond = 0
         self.elapsed_time = 0
         self.counter = 0
+        print(self.duration)
+        print(self.reps)
+
 
 
     def get_frame(self):
 
 
         while True:
+        
+
             self.success, self.img = self.video.read()
             self.img = self.detector.findPose(self.img, False)
             self.lmList = self.detector.findPosition(self.img, draw=False)
 
+
+
+            
             if len(self.lmList) != 0:
         # ------------------(p1, MIDPOINT, p2)
 
@@ -51,22 +60,27 @@ class IPWebCam(object):
                         self.start_time = time.time()
 
                     self.elapsed_time = time.time() - self.start_time
-                    print(self.elapsed_time)
+                    #print(self.elapsed_time)
 
                 else:
                     self.elapsed_time = 0
                     self.start_time = 0
 
-                if int(self.elapsed_time) == self.duration:
+                if int(self.elapsed_time) == int(self.duration):
                     print("yes yes yes")
                     winsound.Beep(440, 500)
                     self.counter += 0.5
                     # self.start_time = 0
                     # self.elapsed_time = 0
                     continue
-            frame_flip = cv2.flip(self.img, 1)
-            ret, jpeg = cv2.imencode('.jpg', frame_flip)
-            return jpeg.tobytes()
+
+
+            ##frame_flip = cv2.flip(, 1)
+            # ret, jpeg = cv2.imencode('.jpg', self.img)
+            _, buffer = cv2.imencode('.jpg', self.img)
+            new_frame_data = base64.b64encode(buffer).decode('utf-8')
+            # return jpeg.tobytes(), self.elapsed_time
+            return new_frame_data, self.elapsed_time, self.counter
 
     def __del__(self):
         self.video.release()
