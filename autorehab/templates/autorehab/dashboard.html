@@ -147,20 +147,20 @@
                 <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
               </ol>
               <div class="carousel-inner">
-                <div class="carousel-item active selected-mask" data-id="0">
-                  <img class="tick"  src="{% static 'autorehab/images/tick.JPG'%}" alt="First slide">
+                <div class="carousel-item active " data-id="0">
+                  <img class="tick hide-tick"  src="{% static 'autorehab/images/tick.JPG'%}" alt="First slide">
                   <img class="d-block w-100"  src="{% static 'autorehab/images/fslr.JPG'%}" alt="First slide">
                 </div>
-                <div class="carousel-item selected-mask" data-id="1">
-                  <img class="tick"  src="{% static 'autorehab/images/tick.JPG'%}" alt="First slide">
+                <div class="carousel-item " data-id="1">
+                  <img class="tick hide-tick"  src="{% static 'autorehab/images/tick.JPG'%}" alt="First slide">
                   <img class="d-block w-100"  src="{% static 'autorehab/images/sslr.JPG'%}" alt="Second slide">
                 </div>
-                <div class="carousel-item selected-mask" data-id="2">
-                  <img class="tick"  src="{% static 'autorehab/images/tick.JPG'%}" alt="First slide">
+                <div class="carousel-item " data-id="2">
+                  <img class="tick hide-tick"  src="{% static 'autorehab/images/tick.JPG'%}" alt="First slide">
                   <img class="d-block w-100"  src="{% static 'autorehab/images/he.JPG'%}" alt="Third slide">
                 </div>
-                <div class="carousel-item selected-mask" data-id="3">
-                  <img class="tick"  src="{% static 'autorehab/images/tick.JPG'%}" alt="First slide">
+                <div class="carousel-item " data-id="3">
+                  <img class="tick hide-tick"  src="{% static 'autorehab/images/tick.JPG'%}" alt="First slide">
                   <img class="d-block w-100"  src="{% static 'autorehab/images/iqr.JPG'%}" alt="Third slide">
                 </div>
               </div>
@@ -197,7 +197,7 @@
                   </table>
                 </div>  
                 <div style="display:flex;justify-content: flex-end" class="mt-4">
-                  <input type="hidden"  name="exerciseType" value=1>
+                  <input type="hidden" id="exerciseType"  name="exerciseType" value=1>
                   <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Cancel</button>
                   <input type="submit" class="btn btn-primary"  type="submit" value="Start Exercise">
                 </div>
@@ -219,32 +219,32 @@
         description:'Front Straight Leg Raise Description',
         diff:2,
         image:'fslr.JPG',
-        selected:true
+        selected:false
       },
       1:{
         name:"Side Straight Leg Raise",
         description:'Side Straight Leg Raise Description',
         diff:3,
         image:'sslr.JPG',
-        selected:true
+        selected:false
       },
       2:{
         name:"Pronated Hip Extension",
         description:'Pronated Hip Extension Description',
         diff:3,
         image:'he.JPG',
-        selected:true
+        selected:false
       },
       3:{
         name:"Inner Quadriceps Range",
         description:'Inner Quadriceps Range Description',
         diff:5,
         image:'iqr.JPG',
-        selected:true
+        selected:false
       }
     }
 
-      $("#total_action").text(4)
+      $("#total_action").text(0 )
       let diff = ''
       for(let i = 0 ; i < cart[0]['diff']; i++ ){
         diff += `<img style='width:35px' src="{% static 'autorehab/images/start.JPG'%}" alt="First slide">`
@@ -261,10 +261,12 @@
         cart[idx]['selected'] = !cart[idx]['selected']
         
         if(cart[idx]['selected']){
+          $("#exerciseType").val(idx+1+"")
+          console.log($("#exerciseType"))
           $(this).children().first().removeClass('hide-tick');
           $(this).addClass('selected-mask')
         }else{
-          $(this).children().first().addClass('hide-tick')        
+          $(this).children().first().addClass(' hide-tick')        
           $(this).removeClass('selected-mask')
         }
         let count = 0 
