@@ -59,8 +59,10 @@ class poseDetector:
         if angle < 0:
             angle = abs(angle)
 
-        if angle > 270:
-            angle = abs(angle - 360)
+        
+
+        if angle > 180:
+            angle = abs(360-angle)
 
         # Draw
         if draw:
@@ -93,23 +95,26 @@ class poseDetector:
                 po3 = 28
                 ran = (0, 20)
 
-            if exer == 2:  # Inner Quadriceps Range
+            if exer == 2:  # Side Straight Leg Raise
+                po1 = 27
+                po2 = 23
+                po3 = 28
+                ran = (0, 20)
+
+            if exer == 3:  # Pronated Hip Extension
+                po1 = 27
+                po2 = 23
+                po3 = 28
+                ran = (0, 20)
+
+            if exer == 4:  # Inner Quadriceps Range
                 po1 = 24
                 po2 = 26
                 po3 = 28
                 ran = (150, 165)
 
-            if exer == 3:  # Side Straight Leg Raise
-                po1 = 27
-                po2 = 23
-                po3 = 28
-                ran = (0, 20)
 
-            if exer == 4:  # Pronated Hip Extension
-                po1 = 27
-                po2 = 23
-                po3 = 28
-                ran = (0, 20)
+
 
         if orient == "L":
             if exer == 1:  # Front Straight Leg Raise
