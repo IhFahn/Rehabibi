@@ -98,7 +98,7 @@ def detection_dev(request):
     if exerciseNumber == 4:
         exerciseType = 'Inner Quadriceps Range'
     
-    
+    request.session['exerciseType'] = exerciseNumber
 
 
 
