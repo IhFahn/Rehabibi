@@ -594,5 +594,9 @@ a:focus {
   color: #292929;
 }
 
+.lock-overlay{
+  position: absolute;
+  opacity: 80%;
+}
 /* end footer section*/
 /*# sourceMappingURL=style.css.map */

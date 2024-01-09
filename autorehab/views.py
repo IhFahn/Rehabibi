@@ -37,9 +37,10 @@ def home(request):
 def home_dev(request):
 
     context = {
+        'url':"home",
+        'title':'Home',
         'general' : 'Physiotherapy',
-        'title' : 'An acl rehab application',
-        'appName' : 'AutoRehab',
+        'appName' : 'REHABIBI',
         'author' : 'by: ihFahn',
         'getStarted' : 'Get Started'
     }
@@ -85,7 +86,9 @@ def durrep_dev(request):
 def detection_dev(request):
 
 
-    exerciseNumber = request.session.get('exerciseType', None)
+    # exerciseNumber = request.session.get('exerciseType', None)
+    # if exerciseNumber == None:
+    exerciseNumber = int(request.POST.get('exerciseType'))
     if exerciseNumber == 1:
         exerciseType = 'Front Straight Leg Raise'
     if exerciseNumber == 2:
@@ -95,7 +98,7 @@ def detection_dev(request):
     if exerciseNumber == 4:
         exerciseType = 'Inner Quadriceps Range'
     
-    
+    request.session['exerciseType'] = exerciseNumber
 
 
 
@@ -117,27 +120,90 @@ def detection_dev(request):
 
     return render(request, 'autorehab/detection_dev.html', context)
 
+def dashboard(request):
+
+    context = {
+        'url':"dashboard",
+        'title':'Dashboard',
+        'bigTitle' : 'Select your exercise',
+        'exercise1' : 'Front Straight Leg Raise',
+        'exercise2' : 'Side Straight Leg Raise',
+        'exercise3' : 'Pronated Hip Extension',
+        'exercise4' : 'Inner Quadriceps Range'
+    }
+
+    return render(request, 'autorehab/dashboard.html', context)
+
+def our_team(request):
+    context={
+        'url':"our_team",
+        'title':"Our Team"
+    }
+
+    return render(request,'autorehab/our_team.html',context)
+
+def exercise(request):
+
+    context = {
+        'url':"exercise",
+        'title':'Exercise',
+        'bigTitle' : 'Select your exercise',
+        'exercise1' : 'Front Straight Leg Raise',
+        'exercise2' : 'Side Straight Leg Raise',
+        'exercise3' : 'Pronated Hip Extension',
+        'exercise4' : 'Inner Quadriceps Range'
+    }
+
+    return render(request, 'autorehab/exercise.html', context)
+
+import zlib
+import base64
 def gen(camera):
+    print('gen here')
     while True:
-        frame, elapsed_time = camera.get_frame()
-        print(int(elapsed_time))
-        boundary_section = (
-            b'--frame\r\n'
-            b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n'
-            b'Elapsed-Time: ' + str(elapsed_time).encode('utf-8') + b'\r\n\r\n'
-        )
-        
-        yield boundary_section
-        
+        frame, elapsed_time, reps = camera.get_frame()
+        # print(int(elapsed_time))
+        # print(type(frame))
+    
+        # boundary_section = (
+        #     b'--frame\r\n'
+        #     b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n'
+        #     b'Elapsed-Time: ' + str(elapsed_time).encode('utf-8') + b'\r\n\r\n'
+        # )
+            # Compress the bytes using gzip
+        # compressed_bytes = zlib.compress(frame.encode('utf-8'))
 
-
+        # Convert the compressed bytes to a base64-encoded string
+        # compressed_str = base64.b64encode(compressed_bytes).decode('utf-8')
+        # boundary_section = (
+        #     b'--frame\n'
+        #     b'frame:' + frame.encode('utf-8') + b'\n'
+        #     b'time:' + str(elapsed_time).encode('utf-8')
+        # )
+        data = {
+            "frame": frame,
+            "time": elapsed_time,
+            "reps": reps
+        }
+        json_str = json.dumps(data)
+        # return frame, elapsed_time
+        yield f"data: {json_str}\n\n"
+        # yield boundary_section
+        
+import json
+from django.http import JsonResponse
 
 def webcam_feed(request):
+    print('here')
     webcamInstance = IPWebCam(request.session.get('exerciseType', None), 
                                               request.session.get('duration', None), 
                                               request.session.get('reps', None))
     
-    #elapsed_time = webcamInstance.timeGetter()
-    #print(elapsed_time)
-    return StreamingHttpResponse(gen(webcamInstance),
-                                 content_type='multipart/x-mixed-replace; boundary=frame')
+    # elapsed_time = webcamInstance.timeGetter()
+    # print(elapsed_time)
+    response =  StreamingHttpResponse(gen(webcamInstance),
+                                 content_type='text/event-stream')
+
+    # response =  StreamingHttpResponse(gen(webcamInstance),
+    #                              content_type='multipart/x-mixed-replace; boundary=frame')
+    return response

@@ -3,73 +3,49 @@
 {% load static %}
 
 {% block content %}
-    <section class="trainer_section layout_padding">
-        {{ duration }}
+    <!-- <section class="trainer_section layout_padding"> -->
+    <section class="trainer_section p-5">
 
-        {{ reps }}
+        <div class="d-flex align-items-center justify-content-center pb-3">
+            <h2>{{ exerciseType }}</h2>
+        </div>
+        <div id="exercisePart" style="display: none;">
+        <div class="container ">
+            <div class="row">
+              <div class="col-sm d-flex justify-content-center align-items-center">
+                <h5>Elapsed Time: <span id="elapsed-time" style="font-size: 40px; font-weight: bold;">0</span> s</h5>
+              </div>
+              <div class="col-sm">
+                <img id="video">
 
-        {{ exerciseType }}
-
-        <img src="{% url 'webcam_feed' %}">
-
-        <p>Elapsed Time: <span id="elapsed-time">0</span> seconds</p>
+              </div>
+              <div class="col-sm d-flex justify-content-center align-items-center">
+                <h5>Reps: <span id="reps" style="font-size: 40px; font-weight: bold;">0</span>/{{ reps }}</h5>
+              </div>
+            </div>
+          </div>
+          </div>
 
         <script>
-            // const elapsedTimeSpan = document.getElementById('elapsed-time');
-            // const imageContainer = document.getElementById('camera-feed');
-            
+            // Create an EventSource for server-sent events
+        const eventSource = new EventSource('/webcam_feed/');
 
+eventSource.onmessage = function (event) {
+    const data = JSON.parse(event.data);
+    
+    // console.log(data)
 
-            // const source = new EventSource("{% url 'webcam_feed' %}");
-            // console.log("SSE connection status:", source.readyState);
+    // Update HTML elements with the received data
+    document.getElementById('video').src = `data:image/jpeg;base64, ${data.frame}`;
+    document.getElementById('elapsed-time').innerText = parseInt(data.time);
+    document.getElementById('reps').innerText = parseInt(data.reps);
+    document.getElementById('exercisePart').style.display = "block";
+};
 
-            // source.onmessage = function (event) {
-            //     console.log("Yes");
-            //     const parts = event.data.split('\r\n\r\n');
-            //     const imageSection = parts.find(section => section.startsWith('Content-Type: image/jpeg'));
-            //     const elapsed_time_section = parts.find(section => section.startsWith('Elapsed-Time:'));
-
-            //     // Parse the elapsed time
-            //     const elapsed_time = elapsed_time_section.split(':')[1].trim();
-            //     console.log("Elapsed TIme:", elapsed_time);
-            //     elapsedTimeSpan.innerHTML = elapsed_time;
-
-            //     // Update the image container with the received image
-            //     const blob = new Blob([imageSection], { type: 'image/jpeg' });
-            //     imageContainer.src = URL.createObjectURL(blob);
-            // };
-
-            // source.onerror = function (event) {
-            //     if (event.eventPhase === EventSource.CLOSED) {
-            //         console.log("EventSource connection was closed.");
-            //     } else {
-            //         console.error("EventSource failed:", event);
-            //     }
-            
-            //};
-
-            function callWebcamFeed() {
-        fetch("{% url 'webcam_feed' %}")
-            .then(response => {
-                console.log("itworks")
-                console.log(response)
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.text();
-            })
-            .then(data => {
-                console.log("Response from webcam_feed:", data);
-            })
-            .catch(error => {
-                console.error("Error calling webcam_feed:", error);
-            });
-    }
-    callWebcamFeed()
-
-    // Call the function when needed, for example, when a button is clicked
-    // Replace 'yourButtonId' with the actual ID of your button
-    //document.getElementById('yourButtonId').addEventListener('click', callWebcamFeed);
+eventSource.onerror = function (error) {
+    console.error('EventSource failed:', error);
+    eventSource.close();
+};
         </script>
     </section>
     

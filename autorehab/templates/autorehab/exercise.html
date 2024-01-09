@@ -1,0 +1,41 @@
+{% extends "autorehab/base_dev.html" %}
+
+{% block content %}
+    <section class=" slider_section position-relative">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="container">
+            <div class="col-lg-10 col-md-11 mx-auto">
+              <div class="detail-box">
+                <div>
+                  <h3>
+                    {{ general }}
+                  </h3>
+                  <h2>
+                    {{ title }}
+                  </h2> 
+                  <h1>
+                    {{ appName }}
+                  </h1>
+                  <p>
+                    {{ author }}
+                  </p>
+                  <div class="">
+                    <a href="{% url 'setup_dev' %}">
+                      {{ getStarted }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+
+      </div>
+
+    </div>
+    </section>
+
+{% endblock content %}
