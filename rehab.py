@@ -4,7 +4,7 @@ import mediapipe
 import PoseModule as pm
 from datetime import datetime
 import numpy as np
-import winsound
+# import winsound
 import argparse
 
 parser = argparse.ArgumentParser(description="set up settings")
@@ -65,7 +65,7 @@ while True:
 
         if int(elapsed_time) == duration:
             print("yes yes yes")
-            winsound.Beep(440, 500)
+            # winsound.Beep(440, 500)
             counter += 0.5
             # start_time = 0
             # elapsed_time = 0

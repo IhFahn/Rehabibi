@@ -2,7 +2,7 @@ import cv2, os, urllib.request
 import time
 import mediapipe as mp
 import numpy as np 
-import winsound
+# import winsound
 import PoseModule as pm
 from django.shortcuts import render
 
@@ -68,7 +68,7 @@ class IPWebCam(object):
 
                 if int(self.elapsed_time) == int(self.duration):
                     print("yes yes yes")
-                    winsound.Beep(440, 500)
+                    # winsound.Beep(440, 500)
                     self.counter += 0.5
                     # self.start_time = 0
                     # self.elapsed_time = 0
